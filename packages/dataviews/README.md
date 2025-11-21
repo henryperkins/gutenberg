@@ -213,19 +213,46 @@ Properties:
 -   `showMedia`: Whether the media should be shown in the UI. `true` by default.
 -   `showDescription`: Whether the description should be shown in the UI. `true` by default.
 -   `showLevels`: Whether to display the hierarchical levels for the data. `false` by default. See related `getItemLevel` DataView prop.
--   `groupByField`: The id of the field used for grouping the dataset. Supported by the `grid` and `table` layouts.
+-   `groupBy`:
+
+    -   `field`: the field used for grouping the dataset.
+    -   `direction`: the direction to use for sorting the groups, one of `asc` or `desc`. Default `asc`.
+
 -   `fields`: a list of remaining field `id` that are visible in the UI and the specific order in which they are displayed.
 -   `layout`: config that is specific to a particular layout type.
 
 ##### Properties of `layout`
 
-| Properties of `layout`                                                                      | Table | Grid | List |
-| ------------------------------------------------------------------------------------------- | ----- | ---- | ---- |
-| `badgeFields`: a list of field's `id` to render without label and styled as badges.         |       | ✓    |      |
-| `styles`: additional `width`, `maxWidth`, `minWidth`, `align` styles for each field column. | ✓     |      |      |
+| Props / Layout | `table` | `pickerTable` | `grid` | `pickerGrid` | `list` | `activity` |
+| -------------- | ------- | ------------- | ------ | ------------ | ------ | ---------- |
+| `density`      | ✓       | ✓             |        |	             |        | ✓          |
+| `enableMoving` | ✓       | ✓             |        |	             |        |            |
+| `styles`       | ✓       | ✓             |        |	             |        |            |
+| `badgeFields`  |         |               | ✓      | ✓            |        |            |
+| `previewSize`  |         |               | ✓      | ✓            |        |            |
+
+`table` and `pickerTable` layouts:
+
+- `density`: one of `comfortable`, `balanced`, or `compact`. Configures the size and spacing of the layout.
+- `enableMoving`: whether the table columns should display moving controls.
+- `styles`: additional `width`, `maxWidth`, `minWidth`, `align` styles for each field column.
 
 **For column alignment (`align` property), follow these guidelines:**
 Right-align whenever the cell value is fundamentally quantitative—numbers, decimals, currency, percentages—so that digits and decimal points line up, aiding comparison and calculation. Otherwise, default to left-alignment for all other types (text, codes, labels, dates).
+
+`grid` and `pickerGrid` layout:
+
+- `badgeFields`: a list of field's `id` to render without label and styled as badges.
+- `previewSize`: a `number` representing the size of the preview.
+
+`list` layout:
+
+- None
+
+`activity` layout:
+
+- `density`: one of `comfortable`, `balanced`, or `compact`. Configures the size and spacing of the layout.
+
 
 #### `onChangeView`: `function`
 
@@ -600,6 +627,7 @@ Same as `DataViews`. Callback executed when the view has changed.
 A list of actions that can be performed on the dataset. See "Actions API" for more details.
 
 **Important differences from `DataViews`:**
+
 -   Only `callback` style actions are supported. `RenderModal` is unsupported.
 -   The `isEligible` callback for actions is unsupported.
 -   The `isPrimary` option is used to render a `primary` variant of `Button`.
@@ -1856,6 +1884,7 @@ When no summary fields are explicitly configured, the panel automatically determ
 4. If no field definition is found, return empty summary fields
 
 For example:
+
 ```js
 {
 	id: 'field_id',
